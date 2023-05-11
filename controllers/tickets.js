@@ -8,7 +8,7 @@ module.exports = {
 
 async function newTicket(req, res) {
     const flight = await Flight.findById(req.params.id);
-    res.render('tickets/new', {flight, errorMsg: ''});
+    res.render('tickets/new', { flight, errorMsg: '', title: 'Add Ticket' });
 }
 
 async function create(req, res) {
@@ -19,6 +19,6 @@ async function create(req, res) {
         res.redirect(`/flights/${req.params.id}`);
     } catch(err) {
         console.log(err);
-        res.render('tickets/new', {flight, errorMsg: err.message})
+        res.render('tickets/new', { flight, errorMsg: err.message, title: 'Add Ticket' })
     }
 }

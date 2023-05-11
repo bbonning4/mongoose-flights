@@ -10,12 +10,13 @@ module.exports = {
 
 async function index(req, res) {
     res.render('flights/index', {
-        flights: await Flight.find({})
+        flights: await Flight.find({}),
+        title: 'All Flights'
     });
 }
 
 function newFlight(req, res) {
-    res.render('flights/new', { errorMsg: ''});
+    res.render('flights/new', { errorMsg: '', title: 'Add Flight' });
 }
 
 async function create(req, res) {
@@ -28,12 +29,12 @@ async function create(req, res) {
         await Flight.create(req.body);
         res.redirect('/flights');
     } catch(err) {
-        res.render('flights/new', { errorMsg: err.message });
+        res.render('flights/new', { errorMsg: err.message, title: 'Add Flight' });
     }
 }
 
 async function show(req, res) {
     const flight = await Flight.findById(req.params.id);
     const tickets = await Ticket.find({flight: flight._id});
-    res.render('flights/show', { flight, tickets });
+    res.render('flights/show', { flight, tickets, title: `${flight.airport}${flight.flightNo}` });
 }
